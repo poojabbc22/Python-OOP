@@ -9,7 +9,7 @@ from boto3.dynamodb.conditions import Attr
 subprocess.call('pip install redis -t /tmp/ --no-cache-dir'.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 sys.path.insert(1, '/tmp/')
 import redis
-def get_account_num(ANI):
+def get_account_num(y):
     redis_conn = None
     redis_endpoint = ""
     redis_port = xxxx
@@ -42,7 +42,7 @@ def lambda_handler(event, context):
         redis_conn = redis.StrictRedis(host=redis_endpoint, port=redis_port, db=0)
         response = redis_conn.get(ID)
         if response is None:
-            ID = get_account_num(ANI)
+            ID = get_account_num(y)
             if ID is not None:
                 response = redis_conn.get(ID)
     except Exception as ex:
