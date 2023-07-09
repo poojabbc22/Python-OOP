@@ -6,7 +6,7 @@ NODE_TABLE_NAME = "xxxxx"
 TICKET_TABLE_NAME = "xxxxx"
 
 dynamodb_client = boto3.client("dynamodb")
-*******************client gave us the list of area codes that are in Panama, so we had put that into s3 and loaded into dynamodb ***********************************
+*******************we have been given the  list of area codes that are in Panama, so we had put that into s3 and loaded into dynamodb ***********************************
 def lambda_handler(event, context):
     s3_path = "xxxxxxxxx"
     #reading the csv provided by them and checking the required fields
@@ -15,6 +15,7 @@ def lambda_handler(event, context):
     ci_ids = set(df_hfc["CI_ID"].dropna().astype(str))
     df_shortnode = wr.s3.read_csv("s3://xxxxxxxxxxxxxxxxx.csv")
     nr_short_nodes = set(df_shortnode["nr_short_node"].dropna().astype(str))
+    #HFC TYPE nodes &FTTH type Nodes
     matching_hfcnodes = df_hfc[df_hfc["CI_ID"].str.contains('|'.join(nr_short_nodes), na=False)]["CI_ID"]
     ftth_ids_csv = set(df[(df["nr_tel_center"].str.startswith("PAN")) & (df["nr_tel_center"].str.len() >= 16) & df["nr_tel_center"].notnull() & (df["nr_tel_center"] != "")]["nr_tel_center"])
 
