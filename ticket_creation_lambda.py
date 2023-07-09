@@ -14,9 +14,9 @@ def lambda_handler(event, context):
     api_response = event['body-json']
 
     valid_fields = ["Impact", "Service ID", "OpCo", "creationDate", "status", "Number of subscribers", "Service impacted", "Severity", "id","category","ETA","ETR"]
-
+#Loss of servive means outgae
     if api_response.get("Impact") == "Loss of Service":
-        service_id = api_response.get("Service ID")
+        service_id = api_response.get("Service-ID")
         ticket = ticket_db_table.get_item(Key={"Node_id": service_id}).get("Item")
 
         if ticket:
